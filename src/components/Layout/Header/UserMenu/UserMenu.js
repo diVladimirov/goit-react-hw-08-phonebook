@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import authOperations from '../../../../redux/auth/authOperations';
 
+import { Button } from '@mui/material';
+
 const UserMenu = () => {
   const dispatch = useDispatch();
   const email = useSelector(state => state.auth.user.email);
@@ -8,9 +10,13 @@ const UserMenu = () => {
   return (
     <div>
       <span>Hello, {email}!</span>
-      <button type="button" onClick={() => dispatch(authOperations.logOut())}>
+      <Button
+        type="button"
+        onClick={() => dispatch(authOperations.logOut())}
+        variant="contained"
+      >
         Log out
-      </button>
+      </Button>
     </div>
   );
 };
