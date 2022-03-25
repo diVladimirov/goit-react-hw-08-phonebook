@@ -6,13 +6,22 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ThemeProvider } from '@mui/material';
+import { theme } from './config/theme';
+import { Global } from '@emotion/react';
+import GlobalStyle from './config/GlobalStyle';
+import CssBaseline from '@mui/material/CssBaseline';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter basename="/goit-react-hw-08-phonebook/">
-          <App />
+          <ThemeProvider theme={theme}>
+            <Global styles={GlobalStyle} />
+            <CssBaseline />
+            <App />
+          </ThemeProvider>
         </BrowserRouter>
       </PersistGate>
     </Provider>

@@ -14,6 +14,7 @@ const UserMenu = () => {
         type="button"
         onClick={() => dispatch(authOperations.logOut())}
         variant="contained"
+        sx={{ marginLeft: '16px' }}
       >
         Log out
       </Button>
