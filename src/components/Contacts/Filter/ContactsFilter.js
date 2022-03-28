@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { updateFilter } from 'redux/contacts/contactsReducers';
 
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 
 const ContactsFilter = () => {
   const dispatch = useDispatch();
@@ -14,20 +14,15 @@ const ContactsFilter = () => {
     <Box
       component="form"
       sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'flex-end',
-        marginTop: '16px',
+        my: '16px',
       }}
     >
-      <Typography sx={{ marginRight: '16px' }} variant="h4">
-        Search contact by the name
-      </Typography>
       <TextField
+        fullWidth
         type="search"
         name="filter"
         label="Type name to find"
-        variant="outlined"
+        variant="standard"
         onChange={handleChange}
       />
     </Box>

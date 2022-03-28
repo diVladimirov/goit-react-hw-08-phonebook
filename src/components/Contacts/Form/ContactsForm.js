@@ -1,16 +1,22 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import contactOperations from '../../../redux/contacts/contactsOperations';
+import { Box, Button, Typography, Modal, TextField, Grid } from '@mui/material';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 
 const ContactsForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
   const items = useSelector(state => state.contacts.items);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     dispatch(contactOperations.fetchContacts());
   }, [dispatch]);
+
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
   const handleChange = ({ target: { name, value } }) => {
     switch (name) {
@@ -39,36 +45,81 @@ const ContactsForm = () => {
 
   return (
     <>
-      <h2>AddForm</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name
-          <input
-            type="text"
-            value={name}
-            onChange={handleChange}
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            placeholder="Input name"
-            required
-          />
-        </label>
-        <label>
-          Number
-          <input
-            type="tel"
-            value={number}
-            onChange={handleChange}
-            name="number"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            placeholder="Input number"
-            required
-          />
-        </label>
-        <button type="submit">Add contact</button>
-      </form>
+      <Button
+        onClick={handleOpenModal}
+        variant="contained"
+        sx={{ marginBottom: 2 }}
+        startIcon={<AddCircleOutlineOutlinedIcon />}
+      >
+        Add new contact
+      </Button>
+      <Modal open={openModal} onClose={handleCloseModal}>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            bgcolor: 'background.paper',
+            border: '2px solid #000',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
+          }}
+        >
+          <Typography component="h1" variant="h5" sx={{ textAlign: 'center' }}>
+            Create new contact
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="given-name"
+                  name="name"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Name"
+                  autoFocus
+                  type="text"
+                  value={name}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="number"
+                  required
+                  fullWidth
+                  id="number"
+                  label="Number"
+                  type="tel"
+                  value={number}
+                  onChange={handleChange}
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Create
+            </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              onClick={handleCloseModal}
+              sx={{ mb: 2 }}
+            >
+              Close
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </>
   );
 };

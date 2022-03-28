@@ -12,8 +12,8 @@ const ContactsPage = () => {
       <Box component="main">
         <Container>
           <ContactsFilter />
-          <ContactsList />
           <ContactsForm />
+          <ContactsList />
         </Container>
       </Box>
       {showModal && <Modal />}
